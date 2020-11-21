@@ -28,9 +28,6 @@ app.get("/api/notes", function (req, res) {
 
 // API Routes
 
-
-
-
 app.post("/api/notes", function (req, res) {
     var newNote = req.body;
     var data = fs.readFileSync('./db/db.json');
