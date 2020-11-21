@@ -20,7 +20,7 @@ app.get("/notes", function (req, res) {
 
 // API Routes
 app.get("/api/notes", function (req, res) {
-    return res.json(db);
+    res.json(db);
 });
 
 app.post("/api/notes", function (req, res) {
@@ -32,6 +32,7 @@ app.post("/api/notes", function (req, res) {
     newList = json.map((json, id) => Object.assign({ id }, json,))
     renderList();
     res.send(`Successfully added an entry!`)
+    res.sendFile(path.join(__dirname, "public/notes.html"));
 });
 
 app.delete("/api/notes/:id", function (req, res) {
@@ -44,12 +45,19 @@ app.delete("/api/notes/:id", function (req, res) {
     });
     renderList();
     res.send("Successfully deleted an entry!");
+    req.send('this?');
+
 });
 
 // Render
 function renderList() {
     fs.writeFile("./db/db.json", JSON.stringify(newList), function (err, res) {
-        if (err) console.log('error', err);
+        console.log('newList:', newList);
+        if (err) {
+            return console.log('error', err)
+        }
+        console.log('did this work?');
+        // res.send('how about this?');
     });
 };
 
