@@ -22,11 +22,13 @@ function loadNotes() {
     });
 };
 
-// API Routes
-
 app.get("/api/notes", function (req, res) {
     return res.json(db);
 });
+
+// API Routes
+
+
 
 
 app.post("/api/notes", function (req, res) {
@@ -57,7 +59,6 @@ app.delete("/api/notes/:id", function (req, res) {
     loadNotes();
 
 });
-
 
 app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
