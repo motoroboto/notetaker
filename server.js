@@ -28,7 +28,7 @@ app.post("/api/notes", function (req, res) {
     let newNote = req.body;
     db.push(newNote);
     db.forEach(function (db) { delete db.id });
-    newList = db.map((db, id) => Object.assign({ id }, db,))
+    db = db.map((db, id) => Object.assign({ id }, db,))
     renderList();
     res.send(`Successfully added an entry!`)
     res.sendFile(path.join(__dirname, "public/notes.html"));
@@ -36,20 +36,15 @@ app.post("/api/notes", function (req, res) {
 
 app.delete("/api/notes/:id", function (req, res) {
     let deleteId = req.params.id;
-    newList = db.filter(object => object.id != deleteId);
+    db = db.filter(object => object.id != deleteId);
     renderList();
     res.send("Successfully deleted an entry!");
 });
 
 // Render
 function renderList() {
-    fs.writeFile("./db/db.json", JSON.stringify(newList), function (err, res) {
-        console.log('newList:', newList);
-        if (err) {
-            return console.log('error', err)
-        }
-        console.log('did this work?');
-        // res.send('how about this?');
+    fs.writeFile("./db/db.json", JSON.stringify(db), function (err, res) {
+        if (err) return console.log('error', err)
     });
 };
 
