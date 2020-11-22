@@ -23,30 +23,22 @@ app.get("/api/notes", function (req, res) {
     res.json(db);
 });
 
+
 app.post("/api/notes", function (req, res) {
-    var newNote = req.body;
-    var data = fs.readFileSync('./db/db.json');
-    var json = JSON.parse(data);
-    json.push(newNote);
-    json.forEach(function (json) { delete json.id });
-    newList = json.map((json, id) => Object.assign({ id }, json,))
+    let newNote = req.body;
+    db.push(newNote);
+    db.forEach(function (db) { delete db.id });
+    newList = db.map((db, id) => Object.assign({ id }, db,))
     renderList();
     res.send(`Successfully added an entry!`)
     res.sendFile(path.join(__dirname, "public/notes.html"));
 });
 
 app.delete("/api/notes/:id", function (req, res) {
-    const deleteId = req.params.id;
-    console.log('target:', deleteId)
-    var data = fs.readFileSync('./db/db.json');
-    var json = JSON.parse(data);
-    newList = json.filter(function (object) {
-        return object.id != deleteId;
-    });
+    let deleteId = req.params.id;
+    newList = db.filter(object => object.id != deleteId);
     renderList();
     res.send("Successfully deleted an entry!");
-    req.send('this?');
-
 });
 
 // Render
