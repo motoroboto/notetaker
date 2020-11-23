@@ -5,7 +5,6 @@ const path = require("path");
 const fs = require("fs");
 let db = require('./db/db.json');
 let PORT = process.env.PORT || 3000;
-var newList = [{}];
 
 // Sets up the Express App
 app.use(express.urlencoded({ extended: true }));
@@ -22,7 +21,6 @@ app.get("/notes", function (req, res) {
 app.get("/api/notes", function (req, res) {
     res.json(db);
 });
-
 
 app.post("/api/notes", function (req, res) {
     let newNote = req.body;
